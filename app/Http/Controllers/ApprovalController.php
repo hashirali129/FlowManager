@@ -17,7 +17,8 @@ class ApprovalController extends Controller
 
     public function index(Request $request)
     {
-        $pendingApprovals = $this->approvalService->getPendingApprovals($request->user());
+        $perPage = min((int) $request->query('per_page', 15), 100);
+        $pendingApprovals = $this->approvalService->getPendingApprovals($request->user(), $perPage);
         return $this->successResponse(ApprovalResource::collection($pendingApprovals));
     }
 

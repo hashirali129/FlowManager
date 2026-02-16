@@ -12,14 +12,14 @@ class ApprovalService
         protected WorkflowEngine $workflowEngine
     ) {}
 
-    public function getPendingApprovals(User $user)
+    public function getPendingApprovals(User $user, int $perPage = 15)
     {
         $roleNames = $user->getRoleNames();
 
         if ($user->hasRole('admin')) {
             return RequestApproval::where('status', 'pending')
                 ->with(['request.requestType', 'request.user', 'request.documents', 'step.role'])
-                ->get();
+                ->paginate($perPage);
         }
 
         return RequestApproval::where('status', 'pending')
@@ -27,7 +27,7 @@ class ApprovalService
                 $query->whereIn('name', $roleNames);
             })
             ->with(['request.requestType', 'request.user', 'request.documents', 'step.role'])
-            ->get();
+            ->paginate($perPage);
     }
 
     public function processApprovalAction(Request $request, User $approver, string $action, ?string $comment = null): Request

@@ -14,12 +14,12 @@ class RequestService
         protected WorkflowEngine $workflowEngine
     ) {}
 
-    public function getUserRequests(User $user)
+    public function getUserRequests(User $user, int $perPage = 15)
     {
         return $user->requests()
             ->with(['requestType', 'approvals.step.role', 'approvals.approver', 'documents'])
             ->latest()
-            ->get();
+            ->paginate($perPage);
     }
 
     public function getRequestById(int $id)

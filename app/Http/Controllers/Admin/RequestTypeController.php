@@ -21,10 +21,11 @@ class RequestTypeController extends Controller
         // $this->authorizeResource(RequestType::class, 'request_type');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', RequestType::class);
-        return $this->successResponse(RequestTypeResource::collection(RequestType::all()));
+        $perPage = min((int) $request->query('per_page', 15), 100);
+        return $this->successResponse(RequestTypeResource::collection(RequestType::paginate($perPage)));
     }
 
     public function store(StoreRequestTypeRequest $request)

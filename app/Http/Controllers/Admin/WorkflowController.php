@@ -18,10 +18,11 @@ class WorkflowController extends Controller
         // $this->authorizeResource(Workflow::class, 'workflow');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', Workflow::class);
-        $workflows = Workflow::with(['requestType', 'steps.role'])->get();
+        $perPage = min((int) $request->query('per_page', 15), 100);
+        $workflows = Workflow::with(['requestType', 'steps.role'])->paginate($perPage);
         return $this->successResponse(WorkflowResource::collection($workflows));
     }
 

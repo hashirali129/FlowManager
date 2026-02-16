@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public function getAllUsers()
+    public function getAllUsers(int $perPage = 15)
     {
-        return User::with(['roles', 'team', 'manager'])->get();
+        return User::with(['roles', 'team', 'manager'])->paginate($perPage);
     }
 
     public function getUserById(int $id)

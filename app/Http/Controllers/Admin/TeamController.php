@@ -20,7 +20,8 @@ class TeamController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny', Team::class);
-        $teams = $this->teamService->getTeamsForUser($request->user());
+        $perPage = min((int) $request->query('per_page', 15), 100);
+        $teams = $this->teamService->getTeamsForUser($request->user(), $perPage);
         return $this->successResponse(TeamResource::collection($teams));
     }
 

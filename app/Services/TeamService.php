@@ -7,17 +7,17 @@ use App\Models\User;
 
 class TeamService
 {
-    public function getTeamsForUser(User $user)
+    public function getTeamsForUser(User $user, int $perPage = 15)
     {
         if ($user->hasRole('admin')) {
-            return Team::with(['manager', 'members'])->get();
+            return Team::with(['manager', 'members'])->paginate($perPage);
         }
 
         // If user is a manager, show only their team
         if ($user->hasRole('manager')) {
             return Team::with(['manager', 'members'])
                 ->where('manager_id', $user->id)
-                ->get();
+                ->paginate($perPage);
         }
 
         return collect();

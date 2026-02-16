@@ -16,10 +16,11 @@ class UserController extends Controller
         protected UserService $userService
     ) {}
 
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize('viewAny', User::class);
-        $users = $this->userService->getAllUsers();
+        $perPage = min((int) $request->query('per_page', 15), 100);
+        $users = $this->userService->getAllUsers($perPage);
         return $this->successResponse(UserResource::collection($users));
     }
 

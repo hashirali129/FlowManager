@@ -18,7 +18,8 @@ class RequestController extends Controller
 
     public function index(Request $request)
     {
-        $requests = $this->requestService->getUserRequests($request->user());
+        $perPage = min((int) $request->query('per_page', 15), 100);
+        $requests = $this->requestService->getUserRequests($request->user(), $perPage);
         return $this->successResponse(RequestResource::collection($requests));
     }
 
