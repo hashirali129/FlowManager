@@ -1,29 +1,42 @@
-<x-mail::message>
-    # Your Request Has Been Rejected
+@extends('emails.layout')
 
-    Your request has been reviewed and was not approved.
+@section('content')
+<div style="text-align: center; margin-bottom: 24px;">
+    <span class="badge badge-danger" style="font-size: 14px; padding: 4px 12px;">Request Rejected</span>
+</div>
 
-    ## Request Details
+<h2 style="margin-top: 0; color: #1e293b; text-align: center;">Update on Your Request</h2>
+<p style="text-align: center; font-size: 16px;">Unfortunately, your request has been <strong>rejected</strong> by the reviewer.</p>
 
-    - **Request Type:** {{ $request->requestType->name }}
-    - **Submitted On:** {{ $request->created_at->format('M d, Y \a\t h:i A') }}
-    - **Rejected By:** {{ $approval->approver->name }} ({{ $approval->step->role->name }})
-    - **Rejected On:** {{ $approval->updated_at->format('M d, Y \a\t h:i A') }}
-    - **Final Status:** {{ ucfirst($request->status) }}
+<table class="details-table" style="margin-top: 32px;">
+    <tr>
+        <th>Request Type</th>
+        <td>{{ $request->requestType->name }}</td>
+    </tr>
+    <tr>
+        <th>Rejected On</th>
+        <td>{{ now()->format('M d, Y \a\t h:i A') }}</td>
+    </tr>
+    <tr>
+        <th>Reference ID</th>
+        <td>#RQ-{{ str_pad($request->id, 5, '0', STR_PAD_LEFT) }}</td>
+    </tr>
+</table>
 
-    @if($approval->comment)
-    ### Reason for Rejection
-    <x-mail::panel>
-        {{ $approval->comment }}
-    </x-mail::panel>
-    @endif
+<div style="background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 16px; margin-top: 24px; border-radius: 4px;">
+    <p style="margin: 0; color: #991b1b; font-size: 14px;"><strong>Rejection Comment:</strong></p>
+    <p style="margin: 8px 0 0 0; color: #b91c1c; font-style: italic;">"{{ $approval->comments ?? 'No specific reason provided' }}"</p>
+</div>
 
-    If you have questions about this decision, please contact {{ $approval->approver->name }} or your manager.
+<div style="text-align: center; margin-top: 32px;">
+    <a href="{{ config('app.url') }}" class="button" style="background-color: #dc2626 !important;">View Full Details</a>
+</div>
 
-    <x-mail::button :url="config('app.url')">
-        View Request
-    </x-mail::button>
+<p style="margin-top: 32px; font-size: 14px; color: #64748b; text-align: center;">
+    You can review the feedback and submit a new request after addressing the comments.
+</p>
 
-    Thanks,<br>
-    {{ config('app.name') }}
-</x-mail::message>
+<p style="margin-top: 24px; font-size: 14px; text-align: center; color: #94a3b8;">
+    Thank you for your understanding.
+</p>
+@endsection

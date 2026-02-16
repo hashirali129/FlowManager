@@ -30,7 +30,7 @@ class RequestCreatedMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.request-created',
+            view: 'emails.request-created',
         );
     }
 

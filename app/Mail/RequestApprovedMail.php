@@ -30,7 +30,7 @@ class RequestApprovedMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.request-approved',
+            view: 'emails.request-approved',
         );
     }
 

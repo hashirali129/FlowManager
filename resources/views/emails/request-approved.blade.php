@@ -1,35 +1,37 @@
-<x-mail::message>
-    # Your Request Has Been Approved ✓
+@extends('emails.layout')
 
-    Good news! Your request has been approved.
+@section('content')
+<div style="text-align: center; margin-bottom: 24px;">
+    <span class="badge badge-success" style="font-size: 14px; padding: 4px 12px;">Request Approved</span>
+</div>
 
-    ## Request Details
+<h2 style="margin-top: 0; color: #1e293b; text-align: center;">Great News!</h2>
+<p style="text-align: center; font-size: 16px;">Your request has been officially <strong>approved</strong>.</p>
 
-    - **Request Type:** {{ $request->requestType->name }}
-    - **Submitted On:** {{ $request->created_at->format('M d, Y \a\t h:i A') }}
-    - **Approved By:** {{ $approval->approver->name }} ({{ $approval->step->role->name }})
-    - **Approved On:** {{ $approval->updated_at->format('M d, Y \a\t h:i A') }}
-    - **Current Status:** {{ ucfirst($request->status) }}
+<table class="details-table" style="margin-top: 32px;">
+    <tr>
+        <th>Request Type</th>
+        <td>{{ $request->requestType->name }}</td>
+    </tr>
+    <tr>
+        <th>Approved On</th>
+        <td>{{ now()->format('M d, Y \a\t h:i A') }}</td>
+    </tr>
+    <tr>
+        <th>Reference ID</th>
+        <td>#RQ-{{ str_pad($request->id, 5, '0', STR_PAD_LEFT) }}</td>
+    </tr>
+</table>
 
-    @if($approval->comment)
-    ### Approver's Comment
-    > {{ $approval->comment }}
-    @endif
+<div style="background-color: #f0fdf4; border-left: 4px solid #22c55e; padding: 16px; margin-top: 24px; border-radius: 4px;">
+    <p style="margin: 0; color: #166534; font-size: 14px;"><strong>Approval Message:</strong> The workflow for this request is now complete. You can view any associated documents or comments in the system.</p>
+</div>
 
-    @if($request->status === 'pending')
-    <x-mail::panel>
-        **Next Step:** Your request is pending review at the next approval step.
-    </x-mail::panel>
-    @else
-    <x-mail::panel>
-        **Completed:** Your request has been fully approved and is now complete!
-    </x-mail::panel>
-    @endif
+<div style="text-align: center; margin-top: 32px;">
+    <a href="{{ config('app.url') }}" class="button" style="background-color: #16a34a !important;">View Request Details</a>
+</div>
 
-    <x-mail::button :url="config('app.url')">
-        View Request
-    </x-mail::button>
-
-    Thanks,<br>
-    {{ config('app.name') }}
-</x-mail::message>
+<p style="margin-top: 32px; font-size: 14px; text-align: center; color: #64748b;">
+    Thank you for using FlowManager.
+</p>
+@endsection
