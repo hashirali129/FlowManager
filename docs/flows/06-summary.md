@@ -22,6 +22,7 @@ Quick reference guide with condensed flow summaries and decision trees for rapid
 ### Admin Capabilities
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#ff6b6b', 'primaryTextColor':'#fff', 'primaryBorderColor':'#c92a2a', 'lineColor':'#868e96', 'secondaryColor':'#ffd43b', 'tertiaryColor':'#74c0fc'}}}%%
 mindmap
   root((Admin))
     Configuration
@@ -43,6 +44,7 @@ mindmap
 ### HR Capabilities
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#ff922b', 'primaryTextColor':'#fff', 'primaryBorderColor':'#d9480f', 'lineColor':'#868e96', 'secondaryColor':'#ffd43b', 'tertiaryColor':'#74c0fc'}}}%%
 mindmap
   root((HR))
     Approvals
@@ -59,6 +61,7 @@ mindmap
 ### Manager Capabilities
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#4dabf7', 'primaryTextColor':'#fff', 'primaryBorderColor':'#1971c2', 'lineColor':'#868e96', 'secondaryColor':'#ffd43b', 'tertiaryColor':'#a9e34b'}}}%%
 mindmap
   root((Manager))
     Approvals
@@ -75,6 +78,7 @@ mindmap
 ### Employee Capabilities
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'primaryColor':'#51cf66', 'primaryTextColor':'#fff', 'primaryBorderColor':'#2b8a3e', 'lineColor':'#868e96', 'secondaryColor':'#ffd43b', 'tertiaryColor':'#74c0fc'}}}%%
 mindmap
   root((Employee))
     Requests

@@ -65,10 +65,7 @@ flowchart TD
     Lockout --> Error401
     
     CreateToken --> LoadUser[Load User with Roles]
-    LoadUser --> Response[{
-        user: {...},
-        token: "xxx"
-    }]
+    LoadUser --> Response["user: data, token: xxx"]
     Response --> StoreToken[Client Stores Token]
     StoreToken --> End([Authenticated])
     
@@ -260,7 +257,7 @@ flowchart TD
     UserHasRole -->|No| Forbidden[403 Forbidden]
     UserHasRole -->|Yes| IsApprover{Is Designated Approver?}
     
-    IsApprover -->|No (approver_id != null)| Forbidden
+    IsApprover -->|No - Already assigned| Forbidden
     IsApprover -->|Yes| CheckTeam{Approval for Team Member?}
     
     CheckTeam -->|Manager Role| VerifyManager{Is User's Manager?}
@@ -293,17 +290,10 @@ flowchart TD
     GenToken --> HashToken[Hash Token SHA-256]
     HashToken --> Store[(INSERT INTO personal_access_tokens)]
     
-    Store --> TokenData[{
-        tokenable_id: user.id,
-        name: 'api-token',
-        token: hash,
-        abilities: '*'
-    }]
+    Store --> TokenData["tokenable_id, name, token, abilities"]
     
     TokenData --> ReturnPlain[Return Plain Token Once]
-    ReturnPlain --> Response[{
-        token: "xxx|plaintext"
-    }]
+    ReturnPlain --> Response["token: xxx|plaintext"]
     
     style GenToken fill:#ff9800
     style HashToken fill:#ff9800
@@ -326,7 +316,7 @@ flowchart TD
     
     CheckExpiry -->|Yes| Reject
     CheckExpiry -->|No| LoadUser[(Load User)]
-    LoadUser --> SetAuth[Set auth()->user()]
+    LoadUser --> SetAuth[Set authenticated user]
     SetAuth --> Continue[Continue Request]
     
     Reject --> End([Denied])

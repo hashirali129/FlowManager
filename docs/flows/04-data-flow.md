@@ -82,11 +82,7 @@ stateDiagram-v2
 flowchart LR
     subgraph "Client Input"
         A[HTTP Request]
-        B[{
-            request_type_id: 1,
-            payload: {...},
-            documents: files
-        }]
+        B["request_type_id: 1, payload: data, documents: files"]
     end
     
     subgraph "Validation Layer"
@@ -141,12 +137,7 @@ flowchart LR
     end
     
     subgraph "JSON Response"
-        J[{
-            id, status,
-            request_type: {...},
-            approvals: [...],
-            documents: [...]
-        }]
+        J["id, status, request_type, approvals, documents"]
     end
     
     DB --> M1
