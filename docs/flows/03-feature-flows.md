@@ -44,10 +44,10 @@ flowchart TD
     ServerValidate -->|Invalid| ValidationErrors[422 Response]
     ValidationErrors --> UserInput
     
-    ServerValidate -->|Valid| CreateRequest[RequestController@store]
-    CreateRequest --> ServiceCall[RequestService::createRequest]
+    ServerValidate -->|Valid| CreateRequest[RequestController store]
+    CreateRequest --> ServiceCall[RequestService createRequest]
     
-    ServiceCall --> WorkflowInit[WorkflowEngine::initiateRequest]
+    ServiceCall --> WorkflowInit[WorkflowEngine initiateRequest]
     
     WorkflowInit --> CreateRecord[(Create Request in DB)]
     CreateRecord --> DetermineStep[Get First Workflow Step]
