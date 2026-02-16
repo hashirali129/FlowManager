@@ -20,7 +20,7 @@ class UpdateRequestTypeRequest extends FormRequest
             'name' => 'required|string|unique:request_types,name,' . $this->route('request_type'),
             'description' => 'nullable|string',
             'form_schema' => [
-                'nullable',
+                'required', 
                 'array',
                 function ($attribute, $value, $fail) {
                     if (is_array($value)) {
